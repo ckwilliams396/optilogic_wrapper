@@ -2,7 +2,7 @@
 
 def generate_api_key_header(api_key):
     return {
-        'API_KEY': api_key
+        'X-API-KEY': api_key
     }
 
 
