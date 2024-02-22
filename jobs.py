@@ -1,5 +1,5 @@
 import requests
-import headers.header_generator as hg
+import header_generator as hg
 
 
 def get_db_data_export_list(api_key):

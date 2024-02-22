@@ -1,5 +1,5 @@
 import requests
-import headers.header_generator as hg
+import header_generator as hg
 
 
 url = "https://api.optilogic.app/v0"

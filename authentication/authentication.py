@@ -1,4 +1,4 @@
-import headers.header_generator as hg
+import header_generator as hg
 import requests
 from multipledispatch import dispatch
 
