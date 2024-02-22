@@ -232,11 +232,12 @@ def delete_file(api_key, workspace_name, directory_path, file_name):
     return response.text
 
 
-def share_folder(api_key, workspace_name, source_directory_path, target_users):
+def share_folder(api_key, workspace_name, source_directory_path, target_users, include_hidden=False):
     options = {
         'sourceDirectoryPath': source_directory_path,
-        'targetUsers': target_users
+        'targetUsers': target_users,
+        'includeHidden': include_hidden
     }
     headers = hg.generate_api_key_header(api_key)
-    response = requests.get(f"{url}/{workspace_name}/folder/share", headers=headers, params=options)
+    response = requests.post(f"{url}/{workspace_name}/folder/share", headers=headers, params=options)
     return response.text
