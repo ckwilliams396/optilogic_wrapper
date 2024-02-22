@@ -1,8 +1,6 @@
 import header_generator as hg
 import requests
-
-
-url = 'https://api.optilogic.app/v0'
+import config
 
 
 def get_database_schema(api_key, storage_name, table):
@@ -10,14 +8,14 @@ def get_database_schema(api_key, storage_name, table):
     if table is not None:
         options['table'] = table
     headers = hg.generate_api_key_header(api_key)
-    response = requests.get(f'{url}/storage/{storage_name}/customizations', headers=headers, params=options)
+    response = requests.get(f'{config.url}/storage/{storage_name}/customizations', headers=headers, params=options)
     return response.text
 
 
 # docs says /ping?
 def get_column_types(api_key):
     headers = hg.generate_api_key_header(api_key)
-    response = requests.get(f'{url}/storage/db-column-types', headers=headers)
+    response = requests.get(f'{config.url}/storage/db-column-types', headers=headers)
     return response.text
 
 
@@ -40,7 +38,7 @@ def create_custom_column(api_key, storage_name, table_name, column_name, datatyp
     if is_required is not None:
         payload['isRequired'] = is_required
     headers = hg.generate_api_key_header(api_key)
-    response = requests.post(f'{url}/storage/{storage_name}/custom-column', headers=headers, data=payload)
+    response = requests.post(f'{config.url}/storage/{storage_name}/custom-column', headers=headers, data=payload)
     return response.text
 
 
@@ -50,7 +48,7 @@ def get_column_details(api_key, storage_name, table_name, column_name):
         'columnName': column_name
     }
     headers = hg.generate_api_key_header(api_key)
-    response = requests.get(f'{url}/storage/{storage_name}/custom-column', headers=headers, params=options)
+    response = requests.get(f'{config.url}/storage/{storage_name}/custom-column', headers=headers, params=options)
     return response.text
 
 
@@ -76,7 +74,7 @@ def update_column(api_key, storage_name, table_name, column_name, new_column_nam
     if is_required is not None:
         options['isRequired'] = is_required
     headers = hg.generate_api_key_header(api_key)
-    response = requests.put(f'{url}/storage/{storage_name}/custom-column', headers=headers, params=payload)
+    response = requests.put(f'{config.url}/storage/{storage_name}/custom-column', headers=headers, params=payload)
     return response.text
 
 
@@ -86,7 +84,7 @@ def delete_column(api_key, storage_name, table_name, column_name):
         'columnName': column_name
     }
     headers = hg.generate_api_key_header(api_key)
-    response = requests.delete(f'{url}/storage/{storage_name}/custom-column', headers=headers, params=options)
+    response = requests.delete(f'{config.url}/storage/{storage_name}/custom-column', headers=headers, params=options)
     return response.text
 
 
@@ -95,17 +93,17 @@ def get_columns(api_key, storage_name, table_name):
         'tableName': table_name
     }
     headers = hg.generate_api_key_header(api_key)
-    response = requests.get(f'{url}/storage/{storage_name}/custom-columns', headers=headers, params=options)
+    response = requests.get(f'{config.url}/storage/{storage_name}/custom-columns', headers=headers, params=options)
     return response.text
 
 
 def validate_columns(api_key, storage_name):
     headers = hg.generate_api_key_header(api_key)
-    response = requests.get(f'{url}/storage/{storage_name}/custom-columns/validate', headers=headers)
+    response = requests.get(f'{config.url}/storage/{storage_name}/custom-columns/validate', headers=headers)
     return response.text
 
 
 def repair_columns(api_key, storage_name):
     headers = hg.generate_api_key_header(api_key)
-    response = requests.post(f'{url}/storage/{storage_name}/custom-columns/repair', headers=headers)
+    response = requests.post(f'{config.url}/storage/{storage_name}/custom-columns/repair', headers=headers)
     return response.text

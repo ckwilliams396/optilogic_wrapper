@@ -1,19 +1,17 @@
 import requests
 import header_generator as hg
-
-
-url = "https://api.optilogic.app/v0"
+import config
 
 
 def get_workspaces(api_key):
     headers = hg.generate_api_key_header(api_key)
-    response = requests.get(f"{url}workspaces", headers=headers)
+    response = requests.get(f'{config.url}/workspaces', headers=headers)
     return response.text
 
 
 def get_workspace_by_id(api_key, workspace_name):
     headers = hg.generate_api_key_header(api_key)
-    response = requests.get(f"{url}/{workspace_name}", headers=headers)
+    response = requests.get(f'{config.url}/{workspace_name}', headers=headers)
     return response.text
 
 
@@ -32,7 +30,7 @@ def get_jobs(api_key, workspace_name, command=None, history=None, run_secs_max=N
     if tags is not None:
         options['tags'] = tags
     headers = hg.generate_api_key_header(api_key)
-    response = requests.get(f"{url}/{workspace_name}/jobs", headers=headers, params=options)
+    response = requests.get(f'{config.url}/{workspace_name}/jobs', headers=headers, params=options)
     return response.text
 
 
@@ -51,7 +49,7 @@ def get_job_stats(api_key, workspace_name, command=None, history=None, run_secs_
     if tags is not None:
         options['tags'] = tags
     headers = hg.generate_api_key_header(api_key)
-    response = requests.get(f"{url}/{workspace_name}/jobs/stats", headers=headers, params=options)
+    response = requests.get(f'{config.url}/{workspace_name}/jobs/stats', headers=headers, params=options)
     return response.text
 
 
@@ -71,7 +69,7 @@ def queue_job(api_key, workspace_name, directory_path, file_name, command=None, 
     if timeout is not None:
         options['timeout'] = timeout
     headers = hg.generate_api_key_header(api_key)
-    response = requests.post(f"{url}/{workspace_name}/jobs", headers=headers, params=options)
+    response = requests.post(f'{config.url}/{workspace_name}/jobs', headers=headers, params=options)
     return response.text
 
 
@@ -80,13 +78,13 @@ def get_job_info(api_key, workspace_name, job_key, op=None):
     if op is not None:
         options['op'] = op
     headers = hg.generate_api_key_header(api_key)
-    response = requests.get(f"{url}/{workspace_name}/jobs/{job_key}", headers=headers, params=options)
+    response = requests.get(f'{config.url}/{workspace_name}/jobs/{job_key}', headers=headers, params=options)
     return response.text
 
 
 def stop_job(api_key, workspace_name, job_key):
     headers = hg.generate_api_key_header(api_key)
-    response = requests.delete(f"{url}/{workspace_name}/jobs/{job_key}", headers=headers)
+    response = requests.delete(f'{config.url}/{workspace_name}/jobs/{job_key}', headers=headers)
     return response.text
 
 
@@ -97,7 +95,7 @@ def queue_jobs(api_key, workspace_name, jobs_to_be_queued, resource_config=None,
     if tags is not None:
         options['tags'] = tags
     headers = hg.generate_api_key_header(api_key)
-    response = requests.post(f"{url}/{workspace_name}/jobBatch/jobify", headers=headers, data=jobs_to_be_queued, params=options)
+    response = requests.post(f'{config.url}/{workspace_name}/jobBatch/jobify', headers=headers, data=jobs_to_be_queued, params=options)
     return response.text
 
 
@@ -108,7 +106,7 @@ def queue_jobs_from_search_terms(api_key, workspace_name, jobs_to_be_queued, res
     if tags is not None:
         options['tags'] = tags
     headers = hg.generate_api_key_header(api_key)
-    response = requests.post(f"{url}/{workspace_name}/jobBatch/jobify/searchNRun", headers=headers, data=jobs_to_be_queued, params=options)
+    response = requests.post(f'{config.url}/{workspace_name}/jobBatch/jobify/searchNRun', headers=headers, data=jobs_to_be_queued, params=options)
     return response.text
 
 
@@ -123,7 +121,7 @@ def run_jobs_back_to_back(api_key, workspace_name, jobs_to_run, resource_config=
     if timeout is not None:
         options['timeout'] = timeout
     headers = hg.generate_api_key_header(api_key)
-    response = requests.post(f"{url}/{workspace_name}/jobBatch/backToBack", headers=headers, data=jobs_to_run, params=options)
+    response = requests.post(f'{config.url}/{workspace_name}/jobBatch/backToBack', headers=headers, data=jobs_to_run, params=options)
     return response.text
 
 
@@ -138,7 +136,7 @@ def run_jobs_back_to_back_from_search_terms(api_key, workspace_name, jobs_to_run
     if timeout is not None:
         options['timeout'] = timeout
     headers = hg.generate_api_key_header(api_key)
-    response = requests.post(f"{url}/{workspace_name}/jobBatch/backToBack/searchNRun", headers=headers, data=jobs_to_run, params=options)
+    response = requests.post(f'{config.url}/{workspace_name}/jobBatch/backToBack/searchNRun', headers=headers, data=jobs_to_run, params=options)
     return response.text
 
 
@@ -153,7 +151,7 @@ def get_files(api_key, workspace_name, search_filter=None, max_depth=None, base_
     if base_dir is not None:
         options['baseDir'] = base_dir
     headers = hg.generate_api_key_header(api_key)
-    response = requests.get(f"{url}/{workspace_name}/files", headers=headers, params=options)
+    response = requests.get(f'{config.url}/{workspace_name}/files', headers=headers, params=options)
     return response.text
 
 
@@ -164,19 +162,19 @@ def get_job_ledger(api_key, workspace_name, job_key, keys=None, limit=None):
     if limit is not None:
         options['limit'] = limit
     headers = hg.generate_api_key_header(api_key)
-    response = requests.get(f"{url}/{workspace_name}/job/{job_key}/ledger", headers=headers, params=options)
+    response = requests.get(f'{config.url}/{workspace_name}/job/{job_key}/ledger', headers=headers, params=options)
     return response.text
 
 
 def get_job_metrics(api_key, workspace_name, job_key):
     headers = hg.generate_api_key_header(api_key)
-    response = requests.get(f"{url}/{workspace_name}/job/{job_key}/metrics", headers=headers)
+    response = requests.get(f'{config.url}/{workspace_name}/job/{job_key}/metrics', headers=headers)
     return response.text
 
 
 def get_job_metrics_stats(api_key, workspace_name, job_key):
     headers = hg.generate_api_key_header(api_key)
-    response = requests.get(f"{url}/{workspace_name}/job/{job_key}/metrics/stats", headers=headers)
+    response = requests.get(f'{config.url}/{workspace_name}/job/{job_key}/metrics/stats', headers=headers)
     return response.text
 
 
@@ -189,7 +187,7 @@ def copy_file(api_key, workspace_name, source_directory_path, source_file_name, 
         'overwrite': overwrite
     }
     headers = hg.generate_api_key_header(api_key)
-    response = requests.post(f"{url}/{workspace_name}/file/copy", headers=headers, params=options)
+    response = requests.post(f'{config.url}/{workspace_name}/file/copy', headers=headers, params=options)
     return response.text
 
 
@@ -200,7 +198,7 @@ def share_file(api_key, workspace_name, source_directory_path, source_file_name,
         'targetUser': target_user
     }
     headers = hg.generate_api_key_header(api_key)
-    response = requests.post(f"{url}/{workspace_name}/file/share", headers=headers, params=options)
+    response = requests.post(f'{config.url}/{workspace_name}/file/share', headers=headers, params=options)
     return response.text
 
 
@@ -209,7 +207,7 @@ def get_file(api_key, workspace_name, directory_path, file_name, op):
     if op is not None:
         options['op'] = op
     headers = hg.generate_api_key_header(api_key)
-    response = requests.get(f"{url}/{workspace_name}/file/{directory_path}/{file_name}", headers=headers, params=options)
+    response = requests.get(f'{config.url}/{workspace_name}/file/{directory_path}/{file_name}', headers=headers, params=options)
     return response.text
 
 
@@ -222,13 +220,13 @@ def upload_file(api_key, workspace_name, directory_path, file_name, path_to_loca
     headers = hg.generate_api_key_header(api_key)
     headers['content-type'] = 'application/octet-stream'
     headers['content-length'] = f'{len(data)}'
-    response = requests.post(f"{url}/{workspace_name}/file/{directory_path}/{file_name}", data=data, headers=headers, params=options)
+    response = requests.post(f'{config.url}/{workspace_name}/file/{directory_path}/{file_name}', data=data, headers=headers, params=options)
     return response.text
 
 
 def delete_file(api_key, workspace_name, directory_path, file_name):
     headers = hg.generate_api_key_header(api_key)
-    response = requests.delete(f"{url}/{workspace_name}/file/{directory_path}/{file_name}", headers=headers)
+    response = requests.delete(f'{config.url}/{workspace_name}/file/{directory_path}/{file_name}', headers=headers)
     return response.text
 
 
@@ -239,5 +237,5 @@ def share_folder(api_key, workspace_name, source_directory_path, target_users, i
         'includeHidden': include_hidden
     }
     headers = hg.generate_api_key_header(api_key)
-    response = requests.post(f"{url}/{workspace_name}/folder/share", headers=headers, params=options)
+    response = requests.post(f'{config.url}/{workspace_name}/folder/share', headers=headers, params=options)
     return response.text
